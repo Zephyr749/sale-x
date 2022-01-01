@@ -1,4 +1,4 @@
-const Date = ({ label, labelColor, className, ...props }) => {
+const DateTime = ({ label, labelColor, className, ...props }) => {
     // integrate formik and yup for frontend validation
     return (
       <div className='w-full'>
@@ -23,5 +23,5 @@ const Date = ({ label, labelColor, className, ...props }) => {
     );
   };
   
-  export default Date;
+  export default DateTime;
   

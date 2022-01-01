@@ -117,55 +117,21 @@ export const REACTIONS = [
   },
 ];
 
-export const LOCKED_TOKENS = [
-  {
-    locker: '64:06:02:21',
-    date: '11 Aug 2021',
-    time: '01:10',
-    amount: '60000000',
-    token_percent: '100',
-    token_address: '23ea.....78ale1',
-  },
-  {
-    locker: '64:06:02:21',
-    date: '11 Aug 2021',
-    time: '01:10',
-    amount: '60000000',
-    token_percent: '100',
-    token_address: '23ea.....78ale1',
-  },
-  {
-    locker: '64:06:02:21',
-    date: '11 Aug 2021',
-    time: '01:10',
-    amount: '60000000',
-    token_percent: '100',
-    token_address: '23ea.....78ale1',
-  },
-  {
-    locker: '64:06:02:21',
-    date: '11 Aug 2021',
-    time: '01:10',
-    amount: '60000000',
-    token_percent: '100',
-    token_address: '23ea.....78ale1',
-  },
-];
+
 
 export const OWNER_LOCKED_TOKEN = [
   {
-    label: 'Tokens Balance',
-    value: '40.58330018620719',
+    tokensBalance: '40.58330018620719',
   },
   {
-    label: 'Locked Tokens',
-    value: '39.7994974842648',
+    tokensBalance: '40.100',
   },
   {
-    label: 'Unlock Date',
-    value: `11 Aug 2022 at 01:10
-    `,
+    tokensBalance: '40.00',
   },
+  {
+    tokensBalance: '100',
+  }
 ];
 
 export const LAUNCH_PAD_CARD = [

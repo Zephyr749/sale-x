@@ -45,7 +45,7 @@ const index = () => {
   const [symbol, setSymbol] = useState("");
   const [amount, setAmount] = useState(0);
   const [lockDate, setLockDate]=useState("");
-  const [decimals, setDecimals] = useState(0);
+  const [decimals, setDecimals] = useState(18);
   const [inputSec, setInputSec] = useState(0);
   const [index, setIndex] = useState(null);
   const [firstView, setFirstView] = useState(true);
@@ -160,13 +160,6 @@ const index = () => {
       
       
     }
-    // await tokContract.methods.approve(adminWalletAddress, String(adminFees)).send({from: app.accountAddress});
-
-    //     await tokContract.methods.approve(dead, String(burnFee)).send({from: app.accountAddress});
-    
-    
-    
-    
     
     }
   }
@@ -201,7 +194,7 @@ const index = () => {
             setTotalSupply(await lpContract.methods.totalSupply().call());
             setBalance(await lpContract.methods.balanceOf(app.accountAddress).call());
             setSymbol(await lpContract.methods.symbol().call());
-
+            setDecimals(await lpContract.methods.decimals().call());
             setProceed(false);
             document.getElementById("errAdr").innerHTML = "";
             // setTokenName(await lpContract.methods.name().call());
@@ -225,8 +218,18 @@ const index = () => {
   
 }
 
+function fromDecimals(value){
+  return Number.parseInt(value) * (10**Number(decimals));
+}
+
+function toDecimals(value){
+  return Number.parseInt(value) / (10**Number(decimals));
+}
+
 function handleAmount(e){
-  setAmount(Number.parseInt(e.target.value) * (10**Number(decimals)));
+  let am = fromDecimals(e.target.value);
+  console.log(am);
+  setAmount(am);
 
 }
 function notifyApproveFirst(){
@@ -254,9 +257,7 @@ function notifyApproved(){
 
 
 async function setMax(){
-
-
-  document.getElementById('lockAmount').value=Number.parseInt(balance) / (10**Number(decimals));
+ document.getElementById('lockAmount').value=Number.parseInt(balance) / (10**Number(decimals));
 }
   
 
@@ -292,7 +293,7 @@ async function setMax(){
        token1Adr: token1Adr,
        token1Name: token1Name,
        lpAdr: lpLockData[i].token,
-       lpBalance: await detailsContract.methods.totalSupply().call(),
+       lpBalance: toDecimals(await detailsContract.methods.totalSupply().call()),
        lockedAmount: lpLockData[i].amount,
        unlockDate: lpLockData[i].releaseTime,
      })
@@ -323,7 +324,7 @@ async function setMax(){
            token: tokenAdr,
            beneficiary: await viewContract.methods.beneficiary(app.accountAddress, i).call(),
            releaseTime: await viewContract.methods.releaseTime(app.accountAddress, i).call(),
-           amount: Number.parseInt(await viewContract.methods.amount(app.accountAddress, i).call())/(10**Number(Number.parseInt(await lpContract.methods.decimals().call()))),
+           amount: toDecimals(await viewContract.methods.amount(app.accountAddress, i).call()),
            index: i
           
          })
@@ -472,7 +473,7 @@ async function setMax(){
                               Amount to lock
                             </h1>
                             <h1 className='font-mont text-left font-medium text-[10px] lg:text-[12px] text-[#A9A9A9]'>
-                            {Number.parseInt(balance) / (10**Number(decimals))} {" "+symbol}
+                            {toDecimals(balance)} {" "+symbol}
                             </h1>
                           </div>
                           <div className='w-full bg-[#F6F7FC] h-[46px]  mt-2 rounded-[10px] flex items-center justify-between overflow-hidden'>
@@ -543,7 +544,7 @@ async function setMax(){
                                 Total Lp Tokens
                               </h1>
                               <h1 className='font-mont font-medium text-[12px] lg:text-sm xl:text-base text-[#474646]'>
-                                {totalSupply}
+                                {toDecimals(totalSupply)}
                               </h1>
                             </div>
                             <div className='flex items-center justify-between'>
@@ -551,7 +552,7 @@ async function setMax(){
                                 Your Lp Tokens to be Locked:
                               </h1>
                               <h1 className='font-mont font-medium text-[12px] lg:text-sm  text-[#474646]'>
-                              {Number.parseInt(amount) / (10**Number(decimals))}/{Number.parseInt(balance) / (10**Number(decimals))}
+                              {toDecimals(amount)}/{toDecimals(balance)}
                               </h1>
                               
                              
@@ -617,7 +618,7 @@ async function setMax(){
                                 Submit
                               </h1>
                             </button>
-                            <ToastContainer
+                            {/* <ToastContainer
                                     position="top-center"
                                     autoClose={4000}
                                     hideProgressBar={false}
@@ -627,7 +628,7 @@ async function setMax(){
                                     pauseOnFocusLoss
                                     draggable
                                     pauseOnHover
-                                  />  
+                                  />   */}
                           </div>
                         </div>
                       </div>

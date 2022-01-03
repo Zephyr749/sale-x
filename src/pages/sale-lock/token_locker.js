@@ -154,7 +154,13 @@ const handleSubmit = async(e) => {
     setAmount(Number.parseInt(e.target.value) * (10**Number(decimals)));
 
   }
-
+  function fromDecimals(value){
+    return Number.parseInt(value) * (10**Number(decimals));
+  }
+  
+  function toDecimals(value){
+    return Number.parseInt(value) / (10**Number(decimals));
+  }
   function setDate(e){
     console.log("inside date "+e.target.value);
     let lockSec = new Date(e.target.value).getTime();
@@ -226,7 +232,7 @@ let now = parseInt(Date.now())+ 600000;
       tokenData.push({
         tokenName: await detailsContract.methods.name().call(),
         tokenAdr: lockData[i].token,
-        tokenBalance: await detailsContract.methods.totalSupply().call(),
+        tokenBalance: toDecimals(await detailsContract.methods.totalSupply().call()),
         lockedTokens: lockData[i].amount,
         unlockDate: lockData[i].releaseTime,
       })
